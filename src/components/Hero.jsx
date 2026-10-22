@@ -27,7 +27,7 @@ export default function Hero() {
       <img
         className="hero__slash"
         src={slashImg}
-        width="836"
+        width="835"
         height="1466"
         alt=""
         aria-hidden="true"
