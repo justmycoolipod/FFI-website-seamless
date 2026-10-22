@@ -330,12 +330,15 @@ svg text {
    ========================================================= */
 .hero {
   position: relative;
+  /* own stacking context: slash can sit above the headline here,
+     while the What-we-do section that follows still paints over the slash */
+  z-index: 0;
   padding-top: var(--space-6);
   min-height: 640px;
 }
 .hero__grid {
   position: relative;
-  z-index: var(--z-content);
+  z-index: 1; /* headline + description sit under the slash */
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: var(--space-4);
@@ -369,7 +372,7 @@ svg text {
 
 .hero__slash {
   position: absolute;
-  z-index: var(--z-deco); /* behind hero text; the What-we-do cards paint over it */
+  z-index: 2; /* above the headline (it slides under as you scroll), below the marquee */
   left: var(--slash-left);
   top: clamp(90px, 12vw, 190px);
   /* tall enough that its foot runs behind the What-we-do card stack */
