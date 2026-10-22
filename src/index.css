@@ -1,0 +1,1463 @@
+/* Open Sans — self-hosted variable font (Latin), weights 300–800 */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 800;
+  src: url('@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2') format('woff2-variations'),
+    url('@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* =========================================================
+   FFI — design tokens (primitive → semantic)
+   ========================================================= */
+:root {
+  /* primitives */
+  --navy-900: #071047;
+  --navy-800: #0b1a5c;
+  --orange-500: #f37321;
+  --orange-600: #d85f10;
+  --blue-50: #f3f7fc;
+  --blue-100: #e3edf8;
+  --blue-200: #c9daf0;
+  --blue-400: #8fb2de;
+  --slate-700: #2b3445;
+  --slate-500: #4a5568;
+  --white: #ffffff;
+
+  /* semantic */
+  --navy: var(--navy-800);
+  --orange: var(--orange-500);
+  --bg: var(--blue-50);
+  --surface: var(--white);
+  --surface-glass: rgb(255 255 255 / 0.62);
+  --text: var(--slate-700);
+  --text-strong: var(--navy-800);
+  --text-muted: var(--slate-500);
+  --border: rgb(11 26 92 / 0.12);
+  --focus: var(--orange-500);
+
+  /* type */
+  --font: 'Open Sans', sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  --fs-section: clamp(1.5rem, 1.1rem + 1.4vw, 2.125rem);
+  --fs-hero: clamp(2.5rem, 1.6rem + 3.8vw, 4.5rem);
+  --fs-marquee: clamp(3.5rem, 1.5rem + 9vw, 10rem);
+
+  /* spacing (8pt) */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-12: 6rem;
+
+  /* elevation */
+  --shadow-sm: 0 2px 8px rgb(11 26 92 / 0.06);
+  --shadow-md: 0 10px 30px rgb(11 26 92 / 0.10);
+  --shadow-lg: 0 24px 60px rgb(11 26 92 / 0.16);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur-base: 240ms;
+  --dur-slow: 700ms;
+
+  /* layers */
+  --z-deco: 0;
+  --z-content: 10;
+  --z-header: 40;
+  --z-skip: 100;
+
+  --container: 1240px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea,
+svg text {
+  font-family: inherit;
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -100px;
+  z-index: var(--z-skip);
+  padding: var(--space-1) var(--space-2);
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.page {
+  position: relative;
+  overflow-x: clip;
+  background:
+    radial-gradient(60% 40% at 100% 8%, rgb(143 178 222 / 0.55), transparent 70%),
+    radial-gradient(50% 35% at 0% 45%, rgb(143 178 222 / 0.45), transparent 70%),
+    radial-gradient(55% 30% at 100% 70%, rgb(143 178 222 / 0.35), transparent 70%),
+    linear-gradient(180deg, #eef3fa 0%, #f6f8fc 40%, #eaf0f8 100%);
+}
+
+.slash {
+  color: var(--orange);
+  font-weight: 800;
+}
+
+.section-title {
+  font-size: var(--fs-section);
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: #0d0f1a;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-2);
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 44px;
+  padding: 0.6rem 1.15rem;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.btn--primary {
+  background: var(--orange);
+  color: var(--white);
+}
+.btn--primary .slash {
+  color: var(--white);
+}
+.btn--primary:hover {
+  background: var(--orange-600);
+  box-shadow: var(--shadow-md);
+}
+.btn--primary:active {
+  transform: scale(0.97);
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--navy);
+  cursor: pointer;
+  transition: background-color var(--dur-fast), color var(--dur-fast), opacity var(--dur-fast);
+}
+.icon-btn:hover:not(:disabled) {
+  background: var(--navy);
+  color: var(--white);
+}
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  /* full-bleed divider under the nav, edge to edge */
+  border-bottom: 1px solid rgb(11 26 92 / 0.25);
+  transition: background-color var(--dur-base), box-shadow var(--dur-base), backdrop-filter var(--dur-base),
+    border-color var(--dur-base);
+}
+.header--scrolled {
+  background: rgb(243 247 252 / 0.82);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-sm);
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 88px;
+}
+.header--scrolled {
+  border-bottom-color: transparent;
+}
+.header__logo {
+  display: inline-flex;
+  padding: 4px 0;
+}
+.logo-mark {
+  width: 64px;
+  height: auto;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.nav ul {
+  display: flex;
+  gap: var(--space-4);
+}
+.nav ul a {
+  position: relative;
+  display: inline-block;
+  padding: 0.6rem 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: #11131c;
+  text-decoration: none;
+}
+.nav ul a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.35rem;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.nav ul a:hover::after {
+  transform: scaleX(1);
+}
+.header__toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+.hero {
+  position: relative;
+  padding-top: var(--space-6);
+  min-height: 640px;
+}
+.hero__grid {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-4);
+}
+.hero__title {
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+.hero {
+  /* slash geometry, shared so the description can sit just clear of it */
+  --slash-left: 13vw;
+  --slash-w: clamp(420px, 60vw, 900px);
+  --page-edge: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+}
+.hero__lead {
+  grid-column: 2;
+  justify-self: end;
+  margin-top: clamp(4rem, 8vw, 7rem);
+  /* fill the space between the slash's right edge (+ gap) and the page edge */
+  width: max(220px, calc(100vw - var(--slash-left) - var(--slash-w) - 28px - var(--page-edge)));
+  max-width: 34ch;
+  font-size: 20px; /* per design spec */
+  font-weight: 700;
+  line-height: 1.5;
+  color: #2b3040;
+}
+
+.hero__slash {
+  position: absolute;
+  z-index: var(--z-deco); /* behind hero text; the What-we-do cards paint over it */
+  left: var(--slash-left);
+  top: clamp(90px, 12vw, 190px);
+  /* tall enough that its foot runs behind the What-we-do card stack */
+  width: var(--slash-w);
+  height: auto;
+  pointer-events: none;
+  /* fade in on load */
+  animation: slash-in 1.4s var(--ease-out) 0.15s both;
+}
+@keyframes slash-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 48px, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Marquee */
+.marquee {
+  position: relative;
+  z-index: var(--z-content);
+  /* sits midway between the hero description and the What-we-do gear */
+  margin-top: clamp(2.5rem, 9vw, 8rem);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee--paused .marquee__track,
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+.marquee__group {
+  display: flex;
+}
+.marquee__word {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-marquee);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  white-space: nowrap;
+  padding-right: 0;
+}
+.marquee__word .slash {
+  font-weight: 800;
+  margin-right: 0.04em;
+}
+.marquee__dot {
+  /* Ellipse separator: 24px at full desktop size, scales with the text; 50px clear space either side */
+  flex: none;
+  width: 0.15em;
+  height: 0.15em;
+  min-width: 10px;
+  min-height: 10px;
+  margin-inline: 50px;
+}
+.marquee__control {
+  position: absolute;
+  right: var(--gutter);
+  bottom: -44px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  color: var(--navy);
+  cursor: pointer;
+}
+.marquee__control:hover {
+  background: var(--white);
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================================================
+   What we do — scroll-driven stacking deck
+   ========================================================= */
+.wwd {
+  position: relative;
+}
+.wwd--scrolly {
+  /* one viewport of pinned frame + ~70vh of scroll per card */
+  height: calc(100vh + var(--steps) * 70vh);
+}
+.wwd__sticky {
+  position: relative;
+}
+.wwd--scrolly .wwd__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.wwd--static {
+  padding-block: var(--space-8) var(--space-12);
+}
+.wwd__grid {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: var(--space-8);
+  align-items: center;
+  padding-top: 88px; /* clear sticky header */
+}
+.wwd__copy {
+  order: 2;
+  max-width: 440px; /* a little wider so 20px text keeps a comfortable line length */
+}
+.wwd__copy p {
+  font-size: 20px; /* per design spec */
+  line-height: 1.5;
+  font-weight: 600;
+  color: #1a1d29;
+}
+.wwd__progress {
+  display: flex;
+  gap: var(--space-1);
+  margin: var(--space-4) 0 0 -0.5rem;
+  padding: 0;
+  list-style: none;
+}
+.wwd__progress button {
+  position: relative;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  border: 0;
+  background: none;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: rgb(11 26 92 / 0.45);
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.wwd__progress button::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 6px;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.wwd__progress button:hover,
+.wwd__progress button.is-active {
+  color: var(--navy);
+}
+.wwd__progress button.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Deck */
+.deck {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  /* room for every peeking card + one open card */
+  height: calc((var(--count) - 1) * var(--peek) + 200px);
+}
+/* Figma card: square, white, thin divider, icon right */
+.deck__card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  min-height: 190px;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  background: rgb(255 255 255 / 0.96);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(11 26 92 / 0.08);
+  border-radius: 0;
+  box-shadow: 0 -1px 0 rgb(11 26 92 / 0.06), 0 8px 24px rgb(11 26 92 / 0.06);
+  transform-origin: 50% 0;
+  transition:
+    transform 700ms var(--ease-out),
+    opacity 500ms var(--ease-out),
+    box-shadow 500ms var(--ease-out);
+  will-change: transform;
+}
+.deck__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.deck__title {
+  font-size: 20px; /* per design spec */
+  font-weight: 800; /* Open Sans ExtraBold */
+  line-height: 1.3;
+  color: #1a1d29;
+}
+.deck__icon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  object-fit: contain; /* icons have different aspect ratios — keep them in one box */
+}
+.deck__body {
+  margin-top: var(--space-2);
+  font-size: 15px; /* per design spec */
+  font-weight: 600; /* Open Sans SemiBold */
+  line-height: 1.55;
+  color: #2b2f3c;
+}
+
+/* past: tucked behind, slightly narrower — covered by the next card */
+.deck__card--past {
+  transform: translateY(calc(var(--i) * var(--peek))) scale(calc(1 - var(--depth) * 0.04));
+  cursor: pointer;
+}
+.deck__card--past:hover .deck__title {
+  color: var(--orange-600);
+}
+
+/* active: in front */
+.deck__card--active {
+  transform: translateY(calc(var(--i) * var(--peek)));
+  box-shadow: 0 -1px 0 rgb(11 26 92 / 0.06), var(--shadow-lg);
+}
+
+/* next: waiting below, slides up into place */
+.deck__card--next {
+  transform: translateY(calc(var(--i) * var(--peek) + 70vh));
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* reduced motion / static fallback: plain stacked list */
+.deck:has(.deck__card--static) {
+  height: auto;
+  display: grid;
+  gap: var(--space-2);
+}
+.deck__card--static {
+  position: relative;
+  min-height: 0;
+}
+.deck:has(.deck__card--static) {
+  gap: 0;
+}
+.deck__card--static + .deck__card--static {
+  border-top: 0;
+}
+
+.glass-obj {
+  position: absolute;
+  pointer-events: none;
+  height: auto;
+}
+.wwd__gear {
+  width: clamp(110px, 12vw, 170px);
+  top: 12%;
+  right: 15%; /* anchored right: stays clear of the hero slash + its dot shadow */
+}
+.wwd__code {
+  width: clamp(110px, 12vw, 160px);
+  bottom: 40px;
+  left: 50%;
+}
+.wwd__bot {
+  width: clamp(100px, 11vw, 150px);
+  top: 32%;
+  right: 0;
+}
+
+.float {
+  animation: float 7s ease-in-out infinite;
+}
+.float--slow {
+  animation-duration: 9s;
+  animation-delay: -2s;
+}
+@keyframes float {
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+
+/* =========================================================
+   Initiatives
+   ========================================================= */
+.initiatives {
+  position: relative;
+}
+.initiatives--static {
+  padding-block: var(--space-8) var(--space-12);
+}
+.initiatives__sticky {
+  position: relative;
+}
+.skyline {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* soften top/bottom so the image melts into the page gradient */
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+.skyline img {
+  width: max(110%, 1100px);
+  max-width: none;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.9;
+}
+.initiatives__head {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.initiatives__head .section-title {
+  margin: 0;
+  color: var(--navy);
+}
+.initiatives__track {
+  position: relative;
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  padding: var(--space-2) max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))) var(--space-6);
+  scrollbar-width: none;
+}
+.initiatives__track::-webkit-scrollbar {
+  display: none;
+}
+/* ---- Pinned, scroll-linked horizontal gallery (ref: cantor8.io) ----
+   --p      0→1 scroll progress through the section (set in JS)
+   --enter  0→1 as the section arrives (set in JS)
+   --dist   px the track must travel to reveal the last card */
+.initiatives--pinned {
+  --p: 0;
+  --enter: 0;
+  --dist: 0px;
+  --stagger-unit: clamp(48px, 9vh, 110px);
+  --card-w: clamp(280px, 30vw, 420px);
+  --card-gap: clamp(24px, 3vw, 48px);
+  --edge: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+}
+.initiatives--pinned .initiatives__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 88px; /* clear sticky header */
+  overflow: hidden;
+}
+.initiatives--pinned .skyline {
+  inset: 88px -6% 0 -6%;
+  transform: translateX(calc(var(--p) * -60px));
+}
+.initiatives--pinned .initiatives__head {
+  margin-bottom: var(--space-3);
+  opacity: var(--enter);
+  transform: translateY(calc((1 - var(--enter)) * 24px));
+}
+.initiatives--pinned .initiatives__track {
+  overflow: visible;
+  scroll-snap-type: none;
+  width: max-content;
+  align-items: stretch; /* equal-height cards in one row */
+  gap: var(--card-gap);
+  /* start state: only the first card, parked at the right edge;
+     the rest wait off-screen and slide in right → left on scroll */
+  padding-left: calc(100vw - var(--card-w) - var(--card-gap));
+  padding-right: var(--edge);
+  padding-bottom: var(--space-6);
+  transform: translate3d(calc(var(--p) * var(--dist) * -1), 0, 0);
+  will-change: transform;
+}
+.initiatives--pinned .icard {
+  flex-basis: var(--card-w);
+  min-height: clamp(300px, 44vh, 400px);
+  padding: var(--space-4);
+  /* entrance rise (cards land on one line) + cursor tilt */
+  transform: translate3d(
+      calc(var(--p) * var(--drift)),
+      calc(var(--stagger) * var(--stagger-unit) + (1 - var(--enter)) * (80px + var(--i) * 40px)),
+      0
+    )
+    perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  opacity: calc(0.2 + var(--enter) * 0.8);
+}
+.initiatives--pinned .icard__title {
+  font-size: var(--fs-xl);
+}
+.initiatives--pinned .icard__body {
+  font-size: 16px; /* per design spec */
+  max-width: 36ch;
+}
+.initiatives--pinned .icard__corner {
+  width: 72px;
+  height: 180px;
+}
+
+.icard {
+  position: relative;
+  flex: 0 0 clamp(240px, 24vw, 290px);
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  scroll-snap-align: start;
+  overflow: hidden;
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow: var(--shadow-sm);
+  transition: translate var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out),
+    background-color var(--dur-base);
+}
+.icard:focus-within {
+  translate: 0 -6px;
+}
+.icard:hover,
+.icard:focus-within {
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+/* ---- Cursor tilt (ref: lessestudio.com) — values set by TiltCard.jsx ---- */
+.icard.tilt {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  scale: calc(1 + var(--hover, 0) * 0.025);
+}
+.icard__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 255 255 / 0.75) 0%,
+    rgb(255 255 255 / 0.18) 35%,
+    transparent 60%
+  );
+  opacity: calc(var(--hover, 0) * 0.9);
+  mix-blend-mode: soft-light;
+}
+.tilt .icard__top {
+  translate: calc(var(--tx, 0px) * 0.6) calc(var(--ty, 0px) * 0.6);
+}
+.tilt .icard__logo {
+  translate: var(--tx, 0px) var(--ty, 0px);
+}
+.tilt .icard__body {
+  translate: calc(var(--tx, 0px) * 0.3) calc(var(--ty, 0px) * 0.3);
+}
+.icard__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+.icard__title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--navy);
+}
+.icard__arrow {
+  flex: none;
+  color: var(--navy);
+  transition: transform var(--dur-base) var(--ease-out), color var(--dur-base);
+}
+.icard:hover .icard__arrow {
+  transform: translate(3px, -3px);
+  color: var(--orange);
+}
+.icard__body {
+  font-size: 16px; /* per design spec */
+  font-weight: 600; /* Open Sans SemiBold */
+  line-height: 1.55;
+  color: #1f2330;
+}
+.icard__logo {
+  margin-top: auto;
+  padding-block: var(--space-4) var(--space-3);
+}
+.icard__link {
+  --pad-x: 1.4rem;
+  position: relative;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 40px;
+  padding: 0.6rem var(--pad-x);
+  margin-block: -0.6rem;
+  /* at rest the text lines up with the card copy; on hover it settles into a filled button */
+  translate: calc(var(--pad-x) * -1) 0;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--navy);
+  background-color: transparent;
+  transition:
+    translate var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    margin var(--dur-base) var(--ease-out);
+}
+.icard__link .slash {
+  transition: color var(--dur-base) var(--ease-out);
+}
+/* hover (anywhere on the card — the link covers it) / keyboard focus → orange button */
+.icard:hover .icard__link,
+.icard:focus-within .icard__link {
+  translate: 0 0;
+  margin-block: 0.4rem -0.6rem;
+  background-color: var(--orange);
+  color: var(--white);
+}
+.icard:hover .icard__link .slash,
+.icard:focus-within .icard__link .slash {
+  color: var(--white);
+}
+.icard__link::after {
+  /* whole card is clickable via the link */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.icard__corner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 56px;
+  height: 140px;
+  background: var(--orange);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  transform: translateX(100%);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.icard:hover .icard__corner,
+.icard:focus-within .icard__corner {
+  transform: translateX(0);
+}
+
+.ilogo {
+  display: block;
+  width: auto;
+  height: 32px; /* shared optical height */
+  max-width: 100%;
+}
+.ilogo--buildfin {
+  height: 18px; /* wordmark-only logo: shorter so it matches the others visually */
+}
+
+/* =========================================================
+   Ecosystem
+   ========================================================= */
+.ecosystem {
+  position: relative;
+  padding-block: var(--space-4) var(--space-6);
+}
+.ecosystem__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+.ecosystem__visual {
+  position: relative;
+  /* bleed toward the left edge like the Figma */
+  margin-left: calc(var(--gutter) * -1);
+}
+.ecosystem__img {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  animation: drift 10s ease-in-out infinite;
+}
+@keyframes drift {
+  50% {
+    transform: translateY(-10px) rotate(-1deg);
+  }
+}
+.ecosystem__copy {
+  position: relative;
+  max-width: 460px; /* wider so 20px text keeps a comfortable line length */
+}
+.ecosystem__copy p {
+  color: #2b2f3c;
+  font-size: 20px; /* per design spec */
+  font-weight: 600; /* Open Sans SemiBold */
+  line-height: 1.5;
+}
+/* magnifier: below the paragraph, nudged left so it overlaps the network's edge (per reference) */
+.ecosystem__magnifier {
+  position: absolute;
+  pointer-events: none;
+  left: -120px;
+  top: calc(100% + 8px);
+  width: 150px;
+  height: auto;
+}
+.ecosystem__puzzle {
+  position: absolute;
+  pointer-events: none;
+  height: auto;
+  width: 120px;
+  top: -140px;
+  right: 10px;
+}
+.node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 5s ease-in-out infinite;
+}
+.node--main {
+  animation-duration: 4s;
+}
+@keyframes pulse {
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+.footer {
+  position: relative;
+  padding-top: var(--space-8);
+}
+.footer__streaks {
+  position: absolute;
+  inset: 0 0 0 0;
+  background: repeating-linear-gradient(90deg, rgb(255 255 255 / 0) 0 18px, rgb(255 255 255 / 0.6) 18px 20px);
+  mask-image: linear-gradient(180deg, transparent, #000 40%, #000 80%, transparent);
+  pointer-events: none;
+}
+.footer__grid {
+  position: relative;
+  display: grid;
+  /* wider brand column so the enlarged logo has room */
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: var(--space-6);
+  align-items: end;
+  padding-bottom: 20px; /* space between the logo and the navy bar */
+}
+.footer__brand {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+.footer__logo {
+  width: clamp(253px, 39vw, 483px); /* scaled up 15% */
+  height: auto;
+}
+.footer__name {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--navy);
+}
+.footer__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.footer__nav a {
+  display: inline-block;
+  padding: 0.4rem 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  color: #11131c;
+}
+.footer__nav a:hover {
+  color: var(--orange-600);
+}
+.footer__title {
+  margin-bottom: var(--space-1);
+}
+.footer__lead {
+  max-width: 40ch; /* wide enough that "learning." stays on the line above */
+  text-wrap: pretty; /* avoid a single word on the last line */
+  margin-bottom: var(--space-3);
+  font-size: 16px; /* per design spec */
+  font-weight: 600; /* Open Sans SemiBold */
+  line-height: 1.55;
+}
+.footer__join {
+  margin-top: var(--space-4);
+}
+.footer__join h3 {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: #11131c;
+}
+.footer__join p {
+  max-width: 34ch;
+  font-size: var(--fs-xs);
+}
+.footer__join a {
+  font-weight: 700;
+  color: var(--navy);
+}
+.footer__join a:hover {
+  color: var(--orange-600);
+}
+.footer__bar {
+  position: relative;
+  background: var(--navy-900);
+  color: var(--white);
+}
+.footer__bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1);
+  padding-block: var(--space-1);
+  font-size: var(--fs-xs);
+}
+.footer__bar ul {
+  display: flex;
+}
+.footer__bar li + li {
+  border-left: 1px solid rgb(255 255 255 / 0.5);
+}
+.footer__bar a {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  text-decoration: none;
+}
+.footer__bar li:last-child a {
+  padding-right: 0;
+}
+.footer__bar a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   Reveal on scroll
+   ========================================================= */
+.reveal > .container,
+.reveal > .initiatives__track {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+.reveal.is-visible > .container,
+.reveal.is-visible > .initiatives__track {
+  opacity: 1;
+  transform: none;
+}
+.reveal.is-visible > .initiatives__track {
+  transition-delay: 120ms;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 1023px) {
+  .wwd__grid,
+  .ecosystem__grid {
+    grid-template-columns: 1fr;
+  }
+  .wwd__grid {
+    gap: var(--space-3);
+    padding-top: 72px;
+  }
+  .wwd__copy {
+    order: -1;
+    max-width: 520px;
+  }
+  .wwd__progress {
+    margin-top: var(--space-1);
+  }
+  .wwd__gear {
+    left: 2%;
+    right: auto;
+    top: auto;
+    bottom: 3%;
+  }
+  .wwd__code {
+    left: auto;
+    right: 8%;
+    bottom: 0;
+  }
+  .wwd__bot {
+    display: none;
+  }
+  .ecosystem__copy {
+    order: -1;
+    max-width: 520px;
+  }
+  .ecosystem__visual {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+  .ecosystem__magnifier {
+    left: auto;
+    right: 8px;
+    top: calc(100% + 4px);
+    width: 84px;
+  }
+  .ecosystem__puzzle {
+    top: -84px;
+    right: 0;
+    width: 72px;
+  }
+  .footer__grid {
+    grid-template-columns: 1fr;
+  }
+  .footer__right {
+    order: -1;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .footer__nav {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .header__toggle {
+    display: grid;
+  }
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--gutter);
+    background: var(--surface);
+    box-shadow: var(--shadow-lg);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity var(--dur-fast), transform var(--dur-fast), visibility 0s linear var(--dur-fast);
+  }
+  .nav--open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .nav ul {
+    flex-direction: column;
+    gap: 0;
+  }
+  .nav ul a {
+    display: block;
+    padding: 0.85rem 0;
+    font-size: var(--fs-base);
+  }
+  .nav__cta {
+    justify-content: center;
+  }
+  .header__inner {
+    position: relative;
+    min-height: 72px;
+  }
+
+  .hero {
+    min-height: 0;
+  }
+  .hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .hero__lead {
+    grid-column: 1;
+    margin-top: var(--space-8);
+    margin-left: auto;
+    width: auto;
+    max-width: 22ch;
+    font-size: 20px;
+    text-shadow: 0 0 18px var(--bg);
+  }
+  .hero__slash {
+    left: -12%;
+    top: 70px;
+    width: 86vw;
+    opacity: 0.6;
+  }
+  @keyframes slash-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 32px, 0) scale(0.94);
+    }
+    to {
+      opacity: 0.6;
+      transform: none;
+    }
+  }
+
+  .deck {
+    --peek: 56px !important;
+    height: calc((var(--count) - 1) * var(--peek) + 240px);
+  }
+  .deck__card {
+    padding: var(--space-2) var(--space-3) var(--space-3);
+    min-height: 230px;
+  }
+  .deck__icon {
+    width: 28px;
+    height: 28px;
+  }
+  .deck__body {
+    font-size: 15px;
+    transition: opacity 400ms var(--ease-out);
+  }
+  .deck__card--past .deck__body {
+    opacity: 0;
+  }
+  .wwd__copy p {
+    font-size: 20px;
+  }
+  .wwd__gear,
+  .wwd__code {
+    opacity: 0.35;
+  }
+
+  .initiatives--pinned {
+    --stagger-unit: 36px;
+    --card-w: 78vw;
+  }
+  .initiatives--pinned .icard {
+    min-height: 300px;
+    padding: var(--space-3);
+  }
+  .initiatives--pinned .icard__title {
+    font-size: var(--fs-lg);
+  }
+  .initiatives--pinned .initiatives__sticky {
+    padding-top: 72px;
+  }
+
+  .footer__brand {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer__logo {
+    width: 230px; /* scaled up 15% */
+  }
+}
+
+/* Short phones (e.g. 375×667): tighten the pinned What-we-do frame so the open card stays on screen */
+@media (max-width: 767px) and (max-height: 720px) {
+  .wwd__grid {
+    gap: var(--space-1);
+    padding-top: 64px;
+  }
+  .wwd .section-title {
+    margin-bottom: var(--space-1);
+  }
+  .wwd__copy p {
+    line-height: 1.38;
+  }
+  .deck {
+    --peek: 36px !important;
+  }
+  .deck__card {
+    padding-top: 9px;
+  }
+}
+
+/* Tablet: narrower slash so the bold description keeps clear of it */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero {
+    --slash-left: 4vw;
+    --slash-w: 54vw;
+  }
+}
+
+/* =========================================================
+   Text reveal — masked word-by-word rise (ref: kononenkogroup.com)
+   ========================================================= */
+.split__w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders / accents inside the mask */
+  padding-block: 0.08em 0.12em;
+  margin-block: -0.08em -0.12em;
+}
+.split__in {
+  display: inline-block;
+  translate: 0 115%;
+  rotate: 4deg;
+  transform-origin: 0 100%;
+  opacity: 0;
+  transition:
+    translate 1s cubic-bezier(0.19, 1, 0.22, 1) var(--d, 0s),
+    rotate 1s cubic-bezier(0.19, 1, 0.22, 1) var(--d, 0s),
+    opacity 0.5s ease var(--d, 0s);
+}
+.split.is-in .split__in {
+  translate: 0 0;
+  rotate: 0deg;
+  opacity: 1;
+}
+/* block variant (button): keep layout, let its shadow/focus ring show once in */
+.split--block {
+  display: inline-block;
+}
+.split--block > .split__w {
+  padding: 0.5rem;
+  margin: -0.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .split__in {
+    translate: none;
+    rotate: none;
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* =========================================================
+   Reduced motion
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee__track {
+    animation: none;
+  }
+  .marquee__control {
+    display: none;
+  }
+  .reveal > .container,
+  .reveal > .initiatives__track {
+    opacity: 1;
+    transform: none;
+  }
+}
