@@ -17,8 +17,8 @@
   /* primitives */
   --navy-900: #071047;
   --navy-800: #0b1a5c;
-  --orange-500: #f37321;
-  --orange-600: #d85f10;
+  --orange-500: #f27a1a; /* brand orange */
+  --orange-600: #f27a1a; /* hover uses the same brand orange */
   --blue-50: #f3f7fc;
   --blue-100: #e3edf8;
   --blue-200: #c9daf0;
@@ -307,21 +307,12 @@ svg text {
   font-weight: 600;
   color: #11131c;
   text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
 }
-.nav ul a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.35rem;
-  height: 2px;
-  background: var(--orange);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-base) var(--ease-out);
-}
-.nav ul a:hover::after {
-  transform: scaleX(1);
+/* hover / keyboard focus: solid change of text colour to brand orange */
+.nav ul a:hover,
+.nav ul a:focus-visible {
+  color: var(--orange);
 }
 .header__toggle {
   display: none;
