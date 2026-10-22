@@ -5,7 +5,7 @@ const footerLinks = [
   { label: 'About us', href: '#about' },
   { label: 'What we do', href: '#what-we-do' },
   { label: 'Initiatives', href: '#initiatives' },
-  { label: 'Our Ecosystem', href: '#ecosystem' },
+  { label: 'Ecosystem', href: '#ecosystem' },
 ]
 
 export default function Footer() {
